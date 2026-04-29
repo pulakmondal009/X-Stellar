@@ -39,10 +39,10 @@ export function TripProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     try {
       if (isSupabaseConfigured() && supabase) {
-        const { data, error } = await (supabase.from("trips").select("*")
-          .eq("user_wallet_address", walletAddress).order("created_at", { ascending: false }) as any) as { data: any[] | null; error: any };
+        const { data, error } = await supabase.from("trips").select("*")
+          .eq("user_wallet_address", walletAddress).order("created_at", { ascending: false });
         if (error) throw error;
-        const mapped: Trip[] = (data ?? []).map((row: any) => ({
+        const mapped: Trip[] = (data ?? []).map((row) => ({
           id: row.id, name: row.name, description: row.description ?? undefined,
           members: (typeof row.members === "string" ? JSON.parse(row.members) : row.members) as Trip["members"],
           expenseIds: (typeof row.expense_ids === "string" ? JSON.parse(row.expense_ids) : row.expense_ids) as string[],
@@ -65,7 +65,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
           members: JSON.parse(JSON.stringify(trip.members)),
           expense_ids: JSON.parse(JSON.stringify(trip.expenseIds)),
           settled: trip.settled, user_wallet_address: publicKey,
-        } as any);
+        });
         if (error) throw error;
       } else {
         saveLocalTrips([trip, ...getLocalTrips()]);
@@ -86,7 +86,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
         if (updates.members !== undefined) db.members = JSON.parse(JSON.stringify(updates.members));
         if (updates.expenseIds !== undefined) db.expense_ids = JSON.parse(JSON.stringify(updates.expenseIds));
         if (updates.settled !== undefined) db.settled = updates.settled;
-        await (supabase.from("trips") as any).update(db).eq("id", id);
+        await supabase.from("trips").update(db).eq("id", id);
       } else {
         const all = getLocalTrips();
         saveLocalTrips(all.map((t) => t.id === id ? { ...t, ...updates } : t));
@@ -117,7 +117,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
       if (!trip) return;
       const updatedIds = trip.expenseIds.includes(expenseId) ? trip.expenseIds : [...trip.expenseIds, expenseId];
       if (isSupabaseConfigured() && supabase) {
-        await (supabase.from("trips") as any).update({ expense_ids: JSON.parse(JSON.stringify(updatedIds)) }).eq("id", tripId);
+        await supabase.from("trips").update({ expense_ids: JSON.parse(JSON.stringify(updatedIds)) }).eq("id", tripId);
       } else {
         const all = getLocalTrips();
         saveLocalTrips(all.map((t) => t.id === tripId ? { ...t, expenseIds: updatedIds } : t));

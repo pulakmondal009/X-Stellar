@@ -149,7 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             wallet_address: publicKey,
             display_name: displayName,
             last_login_at: new Date().toISOString(),
-          } as any)
+          })
           .select()
           .single() as { data: UserRow | null; error: any };
 
@@ -199,7 +199,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (error || !data) return null;
 
       // Update last login
-      await (supabase.from("users") as any)
+      await supabase
+        .from("users")
         .update({ last_login_at: new Date().toISOString() })
         .eq("id", data.id);
 
@@ -234,7 +235,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const dbUpdates: Record<string, any> = {};
         if (updates.displayName) dbUpdates.display_name = updates.displayName;
 
-        await (supabase.from("users") as any).update(dbUpdates).eq("id", user.id);
+        await supabase.from("users").update(dbUpdates).eq("id", user.id);
 
         // Re-fetch
         const { data } = await supabase

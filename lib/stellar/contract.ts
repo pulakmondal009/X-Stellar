@@ -1,5 +1,5 @@
 import {
-  rpc as SorobanRpc,
+  SorobanRpc,
   Contract,
   TransactionBuilder,
   xdr,

@@ -1,4 +1,4 @@
-import { rpc as SorobanRpc } from "@stellar/stellar-sdk";
+import { SorobanRpc } from "@stellar/stellar-sdk";
 import { STELLAR_HORIZON_URL } from "@/lib/utils/constants";
 
 const rpcUrl = STELLAR_HORIZON_URL.replace(

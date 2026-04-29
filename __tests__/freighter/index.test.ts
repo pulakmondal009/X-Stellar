@@ -5,12 +5,12 @@ import {
 } from "@/lib/freighter";
 
 const mockIsConnected = jest.fn();
-const mockGetAddress = jest.fn();
+const mockGetPublicKey = jest.fn();
 const mockSignTransaction = jest.fn();
 
 jest.mock("@stellar/freighter-api", () => ({
   isConnected: (...args: any[]) => mockIsConnected(...args),
-  getAddress: (...args: any[]) => mockGetAddress(...args),
+  getPublicKey: (...args: any[]) => mockGetPublicKey(...args),
   signTransaction: (...args: any[]) => mockSignTransaction(...args),
   requestAccess: jest.fn(),
 }));
@@ -37,18 +37,17 @@ describe("isFreighterInstalled", () => {
 describe("getFreighterPublicKey", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("returns address from response", async () => {
+  it("returns publicKey from response", async () => {
     const addr = "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV";
-    mockGetAddress.mockResolvedValue({ address: addr });
+    mockGetPublicKey.mockResolvedValue({ publicKey: addr });
     expect(await getFreighterPublicKey()).toBe(addr);
   });
 
   it("throws on error response", async () => {
-    mockGetAddress.mockResolvedValue({ error: "Rejected", address: "" });
+    mockGetPublicKey.mockResolvedValue({ error: "Rejected" });
     await expect(getFreighterPublicKey()).rejects.toThrow("Rejected");
   });
 });
-
 
 describe("signXDR", () => {
   beforeEach(() => jest.clearAllMocks());

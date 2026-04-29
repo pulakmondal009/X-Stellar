@@ -14,11 +14,10 @@ jest.mock("@stellar/stellar-sdk", () => {
     toEnvelope: jest.fn().mockReturnValue({ toXDR: () => "mock-xdr-string" }),
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mockBuilder: any = {
-    addOperation: jest.fn().mockReturnThis(),
-    addMemo: jest.fn().mockReturnThis(),
-    setTimeout: jest.fn().mockReturnThis(),
+  const mockBuilder = {
+    addOperation: jest.fn().mockReturnSelf(),
+    addMemo: jest.fn().mockReturnSelf(),
+    setTimeout: jest.fn().mockReturnSelf(),
     build: jest.fn().mockReturnValue(mockTransaction),
   };
 
