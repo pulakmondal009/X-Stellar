@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { useWalletContext } from "./WalletContext";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { db, isSupabaseConfigured } from "@/lib/supabase/client";
 import type { Expense, SplitShare } from "@/types/expense";
 
 const LS_EXPENSES_KEY = "stellar_star_expenses";
@@ -38,8 +38,8 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
   const loadExpenses = useCallback(async (walletAddress: string) => {
     setIsLoading(true);
     try {
-      if (isSupabaseConfigured() && supabase) {
-        const { data, error } = await supabase.from("expenses").select("*")
+      if (isSupabaseConfigured() && db) {
+        const { data, error } = await db.from("expenses").select("*")
           .eq("user_wallet_address", walletAddress).order("created_at", { ascending: false });
         if (error) throw error;
         const mapped: Expense[] = (data ?? []).map((row) => ({
@@ -61,8 +61,8 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
   const addExpense = useCallback(async (expense: Expense) => {
     setExpenses((prev) => [expense, ...prev]);
     try {
-      if (isSupabaseConfigured() && supabase && publicKey) {
-        const { error } = await supabase.from("expenses").insert({
+      if (isSupabaseConfigured() && db && publicKey) {
+        const { error } = await db.from("expenses").insert({
           id: expense.id, title: expense.title, description: expense.description ?? null,
           total_amount: expense.totalAmount, split_mode: expense.splitMode,
           members: JSON.parse(JSON.stringify(expense.members)),
@@ -83,16 +83,16 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
   const updateExpense = useCallback(async (id: string, updates: Partial<Expense>) => {
     setExpenses((prev) => prev.map((e) => e.id === id ? { ...e, ...updates, updatedAt: new Date().toISOString() } : e));
     try {
-      if (isSupabaseConfigured() && supabase) {
-        const db: Record<string, any> = { updated_at: new Date().toISOString() };
-        if (updates.title !== undefined) db.title = updates.title;
-        if (updates.description !== undefined) db.description = updates.description;
-        if (updates.totalAmount !== undefined) db.total_amount = updates.totalAmount;
-        if (updates.splitMode !== undefined) db.split_mode = updates.splitMode;
-        if (updates.members !== undefined) db.members = JSON.parse(JSON.stringify(updates.members));
-        if (updates.shares !== undefined) db.shares = JSON.parse(JSON.stringify(updates.shares));
-        if (updates.settled !== undefined) db.settled = updates.settled;
-        await supabase.from("expenses").update(db).eq("id", id);
+      if (isSupabaseConfigured() && db) {
+        const dbUpdates: Record<string, any> = { updated_at: new Date().toISOString() };
+        if (updates.title !== undefined) dbUpdates.title = updates.title;
+        if (updates.description !== undefined) dbUpdates.description = updates.description;
+        if (updates.totalAmount !== undefined) dbUpdates.total_amount = updates.totalAmount;
+        if (updates.splitMode !== undefined) dbUpdates.split_mode = updates.splitMode;
+        if (updates.members !== undefined) dbUpdates.members = JSON.parse(JSON.stringify(updates.members));
+        if (updates.shares !== undefined) dbUpdates.shares = JSON.parse(JSON.stringify(updates.shares));
+        if (updates.settled !== undefined) dbUpdates.settled = updates.settled;
+        await db.from("expenses").update(dbUpdates).eq("id", id);
       } else {
         const all = getLocalExpenses();
         saveLocalExpenses(all.map((e) => e.id === id ? { ...e, ...updates, updatedAt: new Date().toISOString() } : e));
@@ -104,8 +104,8 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
     const prev = expenses;
     setExpenses((c) => c.filter((e) => e.id !== id));
     try {
-      if (isSupabaseConfigured() && supabase) {
-        await supabase.from("expenses").delete().eq("id", id);
+      if (isSupabaseConfigured() && db) {
+        await db.from("expenses").delete().eq("id", id);
       } else {
         saveLocalExpenses(getLocalExpenses().filter((e) => e.id !== id));
       }
@@ -123,8 +123,8 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
       if (!expense) return;
       const updatedShares = expense.shares.map((s) => s.memberId === memberId ? { ...s, paid: true, txHash } : s);
       const allPaid = updatedShares.every((s) => s.paid);
-      if (isSupabaseConfigured() && supabase) {
-        await supabase.from("expenses").update({ shares: JSON.parse(JSON.stringify(updatedShares)), settled: allPaid, updated_at: new Date().toISOString() }).eq("id", expenseId);
+      if (isSupabaseConfigured() && db) {
+        await db.from("expenses").update({ shares: JSON.parse(JSON.stringify(updatedShares)), settled: allPaid, updated_at: new Date().toISOString() }).eq("id", expenseId);
       } else {
         const all = getLocalExpenses();
         saveLocalExpenses(all.map((e) => e.id === expenseId ? { ...e, shares: updatedShares, settled: allPaid, updatedAt: new Date().toISOString() } : e));

@@ -27,10 +27,10 @@ describe("recordPaymentOnChain — contract errors", () => {
     await expect(
       record({
         expenseId: "exp-1",
-        payer: "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV",
-        payee: "GZYXWVUTSRQPONMLKJIHGFEDCBA765432ZYXWVUTSRQPONMLKJIHGF",
-        amount: "10",
-        txHash: "hash123",
+        payerAddress: "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV",
+        payeeAddress: "GZYXWVUTSRQPONMLKJIHGFEDCBA765432ZYXWVUTSRQPONMLKJIHGF",
+        amount: 10,
+        sourcePublicKey: "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV",
       })
     ).rejects.toThrow(/[Cc]ontract not configured/);
   });
@@ -47,11 +47,12 @@ describe("recordPaymentOnChain — contract errors", () => {
     await expect(
       record({
         expenseId: "exp-1",
-        payer: "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV",
-        payee: "GZYXWVUTSRQPONMLKJIHGFEDCBA765432ZYXWVUTSRQPONMLKJIHGF",
-        amount: "10",
-        txHash: "hash123",
+        payerAddress: "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV",
+        payeeAddress: "GZYXWVUTSRQPONMLKJIHGFEDCBA765432ZYXWVUTSRQPONMLKJIHGF",
+        amount: 10,
+        sourcePublicKey: "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV",
       })
     ).rejects.toThrow();
   });
 });
+
