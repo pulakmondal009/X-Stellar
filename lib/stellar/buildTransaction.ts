@@ -14,6 +14,10 @@ export async function buildPaymentTransaction({
   amount,
   memoText,
 }: PaymentParams): Promise<{ xdr: string }> {
+  if (isNaN(amount) || amount <= 0) {
+    throw new Error(`Invalid payment amount: ${amount}`);
+  }
+
   const account = await horizonServer.loadAccount(sourcePublicKey);
 
   const builder = new TransactionBuilder(account, {

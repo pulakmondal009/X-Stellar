@@ -12,10 +12,9 @@ export function formatAddress(address: string, chars = 6): string {
 
 export function formatXLM(amount: string | number): string {
   const n = typeof amount === "string" ? parseFloat(amount) : amount;
-  return isNaN(n)
-    ? "0"
-    : n.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 7,
-      });
+  if (isNaN(n) || n === 0) return "0";
+  return n.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 7,
+  });
 }
