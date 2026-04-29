@@ -9,7 +9,7 @@ import React, {
   type ReactNode,
 } from "react";
 import { useWalletContext } from "./WalletContext";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { db, isSupabaseConfigured } from "@/lib/supabase/client";
 import { LS_USER } from "@/lib/utils/constants";
 
 type UserRow = {
@@ -90,8 +90,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
 
       try {
-        if (isSupabaseConfigured() && supabase) {
-          const { data, error } = await supabase
+        if (isSupabaseConfigured() && db) {
+          const { data, error } = await db
             .from("users")
             .select("*")
             .eq("wallet_address", publicKey)
@@ -141,8 +141,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (displayName: string): Promise<User | null> => {
       if (!publicKey) return null;
 
-      if (isSupabaseConfigured() && supabase) {
-        const { data, error } = await supabase
+      if (isSupabaseConfigured() && db) {
+        const { data, error } = await db
           .from("users")
           .insert({
             id: crypto.randomUUID(),
@@ -189,8 +189,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = useCallback(async (): Promise<User | null> => {
     if (!publicKey) return null;
 
-    if (isSupabaseConfigured() && supabase) {
-      const { data, error } = await supabase
+    if (isSupabaseConfigured() && db) {
+      const { data, error } = await db
         .from("users")
         .select("*")
         .eq("wallet_address", publicKey)
@@ -199,7 +199,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (error || !data) return null;
 
       // Update last login
-      await supabase
+      await db
         .from("users")
         .update({ last_login_at: new Date().toISOString() })
         .eq("id", data.id);
@@ -231,14 +231,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (updates: Partial<Pick<User, "displayName">>) => {
       if (!user || !publicKey) return;
 
-      if (isSupabaseConfigured() && supabase) {
+      if (isSupabaseConfigured() && db) {
         const dbUpdates: Record<string, any> = {};
         if (updates.displayName) dbUpdates.display_name = updates.displayName;
 
-        await supabase.from("users").update(dbUpdates).eq("id", user.id);
+        await db.from("users").update(dbUpdates).eq("id", user.id);
 
         // Re-fetch
-        const { data } = await supabase
+        const { data } = await db
           .from("users")
           .select("*")
           .eq("id", user.id)

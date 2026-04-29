@@ -1,5 +1,5 @@
 import {
-  SorobanRpc,
+  rpc,
   Contract,
   TransactionBuilder,
   xdr,
@@ -112,7 +112,7 @@ export async function getContractExpense(
     const simResult = await sorobanServer.simulateTransaction(builtTx);
 
     if (
-      SorobanRpc.Api.isSimulationSuccess(simResult) &&
+      rpc.Api.isSimulationSuccess(simResult) &&
       simResult.result
     ) {
       return scValToNative(simResult.result.retval);

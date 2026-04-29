@@ -15,9 +15,9 @@ jest.mock("@stellar/stellar-sdk", () => {
   };
 
   const mockBuilder = {
-    addOperation: jest.fn().mockReturnSelf(),
-    addMemo: jest.fn().mockReturnSelf(),
-    setTimeout: jest.fn().mockReturnSelf(),
+    addOperation: jest.fn().mockImplementation(() => mockBuilder),
+    addMemo: jest.fn().mockImplementation(() => mockBuilder),
+    setTimeout: jest.fn().mockImplementation(() => mockBuilder),
     build: jest.fn().mockReturnValue(mockTransaction),
   };
 
