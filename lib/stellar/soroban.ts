@@ -1,11 +1,9 @@
 import { rpc } from "@stellar/stellar-sdk";
-import { STELLAR_HORIZON_URL } from "@/lib/utils/constants";
 
-const rpcUrl = STELLAR_HORIZON_URL.replace(
-  "horizon-testnet",
-  "soroban-testnet"
-).replace("horizon.", "soroban.");
+const rpcUrl =
+  process.env.NEXT_PUBLIC_SOROBAN_RPC_URL ??
+  "https://soroban-testnet.stellar.org";
 
 export const sorobanServer = new rpc.Server(rpcUrl, {
-  allowHttp: true,
+  allowHttp: rpcUrl.startsWith("http://"),
 });

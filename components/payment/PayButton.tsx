@@ -3,8 +3,7 @@
 import React from "react";
 import { Zap, CheckCircle2 } from "lucide-react";
 import Spinner from "@/components/ui/Spinner";
-import { formatXLM } from "@/lib/utils";
-import { cn } from "@/lib/utils";
+import { formatXLM, cn } from "@/lib/utils";
 import type { SplitShare } from "@/types/expense";
 
 /* ─── Props ─── */

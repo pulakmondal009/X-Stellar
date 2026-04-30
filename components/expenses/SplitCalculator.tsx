@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, ExternalLink, Loader2 } from "lucide-react";
+import { CheckCircle2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
 import { formatXLM, formatAddress } from "@/lib/utils";

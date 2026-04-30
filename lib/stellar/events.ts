@@ -1,4 +1,3 @@
-import { horizonServer } from "./client";
 import type { ContractPaymentEvent } from "@/types/contract";
 
 export async function fetchContractEvents(
