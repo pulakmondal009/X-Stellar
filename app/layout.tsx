@@ -8,6 +8,7 @@ import { WalletProvider } from "@/context/WalletContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ExpenseProvider } from "@/context/ExpenseContext";
 import { TripProvider } from "@/context/TripContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -60,8 +61,18 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Stellar-star",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   icons: {
-    icon: "/icon.svg",
+    icon: "/favicon.svg",
+    apple: "/apple-touch-icon.svg",
   },
 };
 
@@ -81,15 +92,17 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} font-sans bg-[#F6F6F6] text-[#0F0F14] antialiased`}
       >
-        <ToastProvider>
-          <WalletProvider>
-            <AuthProvider>
-              <ExpenseProvider>
-                <TripProvider>{children}</TripProvider>
-              </ExpenseProvider>
-            </AuthProvider>
-          </WalletProvider>
-        </ToastProvider>
+        <ErrorBoundary>
+          <ToastProvider>
+            <WalletProvider>
+              <AuthProvider>
+                <ExpenseProvider>
+                  <TripProvider>{children}</TripProvider>
+                </ExpenseProvider>
+              </AuthProvider>
+            </WalletProvider>
+          </ToastProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

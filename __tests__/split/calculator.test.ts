@@ -40,8 +40,7 @@ describe("isValidXLMAmount", () => {
 
 describe("isValidStellarAddress", () => {
   it("returns true for a valid G-address (56 chars, starts with G)", () => {
-    const validAddress =
-      "GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUV";
+    const validAddress = `G${"A".repeat(55)}`;
     expect(validAddress.length).toBe(56);
     expect(isValidStellarAddress(validAddress)).toBe(true);
   });

@@ -1,3 +1,5 @@
+/// <reference types="qrcode" />
+
 import QRCode from "qrcode";
 
 export async function generateSEP0007QR(

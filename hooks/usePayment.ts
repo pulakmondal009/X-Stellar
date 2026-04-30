@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from "react";
 import { buildPaymentTransaction } from "@/lib/stellar/buildTransaction";
-import { signXDR } from "@/lib/freighter";
 import { submitSignedTransaction } from "@/lib/stellar/submitTransaction";
 import { recordPaymentOnChain } from "@/lib/stellar/contract";
 import { useWalletContext } from "@/context/WalletContext";
@@ -65,6 +64,7 @@ export function usePayment(): UsePaymentReturn {
 
         // 2. Sign
         setStatus("signing");
+        const { signXDR } = await import("@/lib/freighter");
         const signedXdr = await signXDR(xdr, NETWORK_PASSPHRASE);
 
         // 3. Submit

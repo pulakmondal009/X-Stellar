@@ -1,5 +1,5 @@
 import {
-  getAddress,
+  getPublicKey,
   isConnected,
   signTransaction,
   requestAccess,
@@ -15,9 +15,9 @@ export async function isFreighterInstalled(): Promise<boolean> {
 }
 
 export async function getFreighterPublicKey(): Promise<string> {
-  const r = await getAddress();
+  const r = await getPublicKey();
   if (r.error) throw new Error(String(r.error));
-  return r.address ?? "";
+  return r.publicKey ?? r.address ?? "";
 }
 
 export async function getFreighterNetwork(): Promise<string> {

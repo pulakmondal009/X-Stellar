@@ -10,12 +10,7 @@ import React, {
 } from "react";
 import type { WalletContextType } from "@/types/wallet";
 import { LS_PUBLIC_KEY } from "@/lib/utils/constants";
-import {
-  isFreighterInstalled,
-  requestFreighterAccess,
-} from "@/lib/freighter";
 import { getXLMBalance } from "@/lib/stellar/getBalance";
-import { getFreighterNetwork } from "@/lib/freighter";
 
 const WalletContext = createContext<WalletContextType | null>(null);
 
@@ -52,6 +47,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // ─── Hydrate Network ───
   const hydrateNetwork = useCallback(async () => {
     try {
+      const { getFreighterNetwork } = await import("@/lib/freighter");
       const net = await getFreighterNetwork();
       setNetwork(net);
     } catch {
@@ -63,8 +59,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function autoReconnect() {
       try {
+        if (typeof window === "undefined") return;
+
         const savedKey = localStorage.getItem(LS_PUBLIC_KEY);
         if (savedKey) {
+          const { isFreighterInstalled } = await import("@/lib/freighter");
           const installed = await isFreighterInstalled();
           if (installed) {
             setPublicKey(savedKey);
@@ -91,6 +90,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setError(null);
 
     try {
+      const { isFreighterInstalled, requestFreighterAccess } = await import(
+        "@/lib/freighter"
+      );
       const installed = await isFreighterInstalled();
       if (!installed) {
         setError("Freighter wallet is not installed");
@@ -109,7 +111,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
       setPublicKey(pk);
       setSelectedWalletId("freighter");
-      localStorage.setItem(LS_PUBLIC_KEY, pk);
+      if (typeof window !== "undefined") {
+        localStorage.setItem(LS_PUBLIC_KEY, pk);
+      }
 
       await Promise.all([fetchBalance(pk), hydrateNetwork()]);
 
@@ -130,7 +134,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setNetwork(null);
     setSelectedWalletId(null);
     setError(null);
-    localStorage.removeItem(LS_PUBLIC_KEY);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(LS_PUBLIC_KEY);
+    }
   }, []);
 
   // ─── Refresh Balance ───

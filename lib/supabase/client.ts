@@ -17,7 +17,6 @@ export const supabase: SupabaseClient<Database> | null = isSupabaseConfigured()
  * context files that build their own type-safe row mappers.
  * Only call this when isSupabaseConfigured() is true.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const db: SupabaseClient<any> | null = supabase as SupabaseClient<any> | null;
 
 export function createAuthenticatedClient(
