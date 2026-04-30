@@ -27,8 +27,7 @@ export async function getFreighterNetwork(): Promise<string> {
 export async function requestFreighterAccess(): Promise<string> {
   const r = await requestAccess();
   if (r.error) throw new Error(String(r.error));
-  // requestAccess returns { publicKey } in v6
-  return (r as unknown as { publicKey: string }).publicKey ?? "";
+  return r.address ?? "";
 }
 
 export async function signXDR(
