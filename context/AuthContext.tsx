@@ -157,19 +157,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!publicKey) return null;
 
       if (isSupabaseConfigured() && db) {
+        // Use upsert to gracefully handle duplicate wallet addresses
+        // and work more reliably with RLS policies
         const result = (await db
           .from("users")
-          .insert({
-            id: crypto.randomUUID(),
-            wallet_address: publicKey,
-            display_name: displayName,
-            last_login_at: new Date().toISOString(),
-          })
+          .upsert(
+            {
+              wallet_address: publicKey,
+              display_name: displayName,
+              last_login_at: new Date().toISOString(),
+            },
+            { onConflict: "wallet_address" }
+          )
           .select()
           .single()) as SupabaseRowResult<UserRow>;
         const { data, error } = result;
 
-        if (error) throw new Error(error.message ?? "Failed to sign up");
+        if (error) {
+          console.error("Supabase signUp error:", error);
+          throw new Error(error.message ?? "Failed to sign up");
+        }
         if (!data) return null;
 
         const u: User = {

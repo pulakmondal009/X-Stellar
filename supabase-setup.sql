@@ -53,17 +53,28 @@ ALTER TABLE public.expenses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.trips ENABLE ROW LEVEL SECURITY;
 
 -- Users: anon can read/insert/update own wallet
+DROP POLICY IF EXISTS "users_select" ON public.users;
+DROP POLICY IF EXISTS "users_insert" ON public.users;
+DROP POLICY IF EXISTS "users_update" ON public.users;
 CREATE POLICY "users_select" ON public.users FOR SELECT USING (true);
 CREATE POLICY "users_insert" ON public.users FOR INSERT WITH CHECK (true);
 CREATE POLICY "users_update" ON public.users FOR UPDATE USING (true);
 
 -- Expenses: wallet-address scoped via header
+DROP POLICY IF EXISTS "expenses_select" ON public.expenses;
+DROP POLICY IF EXISTS "expenses_insert" ON public.expenses;
+DROP POLICY IF EXISTS "expenses_update" ON public.expenses;
+DROP POLICY IF EXISTS "expenses_delete" ON public.expenses;
 CREATE POLICY "expenses_select" ON public.expenses FOR SELECT USING (true);
 CREATE POLICY "expenses_insert" ON public.expenses FOR INSERT WITH CHECK (true);
 CREATE POLICY "expenses_update" ON public.expenses FOR UPDATE USING (true);
 CREATE POLICY "expenses_delete" ON public.expenses FOR DELETE USING (true);
 
 -- Trips: same open policy (wallet-scoping done in application layer)
+DROP POLICY IF EXISTS "trips_select" ON public.trips;
+DROP POLICY IF EXISTS "trips_insert" ON public.trips;
+DROP POLICY IF EXISTS "trips_update" ON public.trips;
+DROP POLICY IF EXISTS "trips_delete" ON public.trips;
 CREATE POLICY "trips_select" ON public.trips FOR SELECT USING (true);
 CREATE POLICY "trips_insert" ON public.trips FOR INSERT WITH CHECK (true);
 CREATE POLICY "trips_update" ON public.trips FOR UPDATE USING (true);
