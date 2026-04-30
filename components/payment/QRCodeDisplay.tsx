@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { QrCode, RefreshCw, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { formatXLM } from "@/lib/utils";
@@ -77,12 +78,13 @@ export default function QRCodeDisplay({
           </div>
         ) : (
           /* QR Code */
-          <img
+          <Image
             src={qrDataUrl!}
             alt={`QR code to pay ${formatXLM(amount)} XLM`}
             width={256}
             height={256}
             className="rounded-xl border border-[#E5E5E5]"
+            unoptimized
           />
         )}
       </div>

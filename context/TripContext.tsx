@@ -20,6 +20,7 @@ interface TripContextType {
 const TripContext = createContext<TripContextType | null>(null);
 
 function getLocalTrips(): Trip[] {
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(LS_TRIPS_KEY);
     return raw ? JSON.parse(raw) : [];
@@ -27,6 +28,7 @@ function getLocalTrips(): Trip[] {
 }
 
 function saveLocalTrips(trips: Trip[]) {
+  if (typeof window === "undefined") return;
   try { localStorage.setItem(LS_TRIPS_KEY, JSON.stringify(trips)); } catch {}
 }
 

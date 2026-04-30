@@ -40,7 +40,7 @@ export function Modal({ open, onClose, title, description, children, size = "md"
     if (!disableBackdropClose) onClose();
   }, [disableBackdropClose, onClose]);
 
-  if (typeof window === "undefined") return null;
+  if (typeof document === "undefined") return null;
 
   return createPortal(
     <AnimatePresence>

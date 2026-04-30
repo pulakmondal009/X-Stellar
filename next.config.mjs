@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ["horizon-testnet.stellar.org"],
+    formats: ["image/avif", "image/webp"],
+  },
   serverExternalPackages: ["@stellar/stellar-sdk"],
   webpack: (config, { isServer }) => {
     if (!isServer) {

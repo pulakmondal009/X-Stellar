@@ -20,6 +20,7 @@ interface ExpenseContextType {
 const ExpenseContext = createContext<ExpenseContextType | null>(null);
 
 function getLocalExpenses(): Expense[] {
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(LS_EXPENSES_KEY);
     return raw ? JSON.parse(raw) : [];
@@ -27,6 +28,7 @@ function getLocalExpenses(): Expense[] {
 }
 
 function saveLocalExpenses(expenses: Expense[]) {
+  if (typeof window === "undefined") return;
   try { localStorage.setItem(LS_EXPENSES_KEY, JSON.stringify(expenses)); } catch {}
 }
 

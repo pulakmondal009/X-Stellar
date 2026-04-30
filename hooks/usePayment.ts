@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from "react";
 import { buildPaymentTransaction } from "@/lib/stellar/buildTransaction";
-import { signXDR } from "@/lib/freighter";
 import { submitSignedTransaction } from "@/lib/stellar/submitTransaction";
 import { recordPaymentOnChain } from "@/lib/stellar/contract";
 import { useWalletContext } from "@/context/WalletContext";
@@ -29,7 +28,7 @@ interface UsePaymentReturn {
   status: PaymentStatus;
   txHash: string | null;
   error: string | null;
-  sendPayment: (params: SendPaymentParams) => Promise<void>;
+  sendPayment: (params: SendPaymentParams) => Promise<string | null>;
   reset: () => void;
 }
 
@@ -65,6 +64,7 @@ export function usePayment(): UsePaymentReturn {
 
         // 2. Sign
         setStatus("signing");
+        const { signXDR } = await import("@/lib/freighter");
         const signedXdr = await signXDR(xdr, NETWORK_PASSPHRASE);
 
         // 3. Submit
@@ -89,6 +89,8 @@ export function usePayment(): UsePaymentReturn {
           console.warn("Contract recording failed:", contractErr);
           setStatus("partial_success");
         }
+
+        return result.hash;
       } catch (err: any) {
         const message = err?.message ?? "Payment failed";
         setError(message);

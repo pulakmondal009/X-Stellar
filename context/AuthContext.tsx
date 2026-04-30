@@ -43,12 +43,14 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 function cacheUser(user: User) {
+  if (typeof window === "undefined") return;
   try {
     localStorage.setItem(LS_USER, JSON.stringify(user));
   } catch {}
 }
 
 function getCachedUser(): User | null {
+  if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem(LS_USER);
     return raw ? JSON.parse(raw) : null;
@@ -58,6 +60,7 @@ function getCachedUser(): User | null {
 }
 
 function clearUserCache() {
+  if (typeof window === "undefined") return;
   try {
     localStorage.removeItem(LS_USER);
   } catch {}
