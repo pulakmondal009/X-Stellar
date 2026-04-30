@@ -30,11 +30,11 @@ const getMetadataBase = () => {
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
   title: {
-    default: "Stellar-star — Split Bills on the Stellar Blockchain",
-    template: "%s | Stellar-star",
+    default: "X-Stellar — Split Bills on the Stellar Blockchain",
+    template: "%s | X-Stellar",
   },
   description:
-    "Stellar-star is a decentralized bill-splitting app built on the Stellar blockchain. Split expenses, pay instantly with XLM, track with QR codes — all trustless, all transparent.",
+    "X-Stellar is a decentralized bill-splitting app built on the Stellar blockchain. Split expenses, pay instantly with XLM, track with QR codes — all trustless, all transparent.",
   keywords: [
     "Stellar",
     "blockchain",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Stellar-star — Decentralized Bill Splitting",
+        alt: "X-Stellar — Decentralized Bill Splitting",
       },
     ],
   },
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Stellar-star",
+    title: "X-Stellar",
   },
   formatDetection: {
     telephone: false,

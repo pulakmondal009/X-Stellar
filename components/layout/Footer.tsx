@@ -107,7 +107,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/30">
-            © 2025 Stellar-star. Built on Stellar.
+            © 2025 X-Stellar. Built on Stellar.
           </p>
           <p className="text-xs text-white/20">
             Not financial advice. Use on Testnet.

@@ -1,6 +1,6 @@
 {
-  "name": "Stellar-star",
-  "short_name": "Stellar-star",
+  "name": "X-Stellar",
+  "short_name": "X-Stellar",
   "description": "Decentralized bill splitting on the Stellar blockchain",
   "start_url": "/",
   "display": "standalone",

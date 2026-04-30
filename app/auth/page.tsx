@@ -35,7 +35,7 @@ export default function AuthPage() {
           return;
         }
         await signUp(displayName.trim());
-        toast.success("Account created!", "Welcome to Stellar-star.");
+        toast.success("Account created!", "Welcome to X-Stellar.");
       } else {
         const user = await signIn();
         if (!user) {
@@ -96,7 +96,7 @@ export default function AuthPage() {
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-black text-[#0F0F14] text-center mb-2">
-                Welcome to Stellar-star
+                Welcome to X-Stellar
               </h1>
               <p className="text-[#888] text-center text-sm mb-8">
                 Connect your Stellar wallet to get started

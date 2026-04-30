@@ -1,6 +1,6 @@
-# Stellar-Star — Runbook
+# X-Stellar — Runbook
 
-Step-by-step guide to get Stellar-Star running locally.
+Step-by-step guide to get X-Stellar running locally.
 
 ---
 
@@ -16,8 +16,8 @@ Step-by-step guide to get Stellar-Star running locally.
 ## 2. Clone & Install
 
 ```bash
-git clone https://github.com/your-org/stellar-star.git
-cd stellar-star
+git clone https://github.com/your-org/X-Stellar.git
+cd X-Stellar
 npm install
 ```
 
@@ -101,7 +101,7 @@ https://friendbot.stellar.org/?addr=YOUR_PUBLIC_KEY
 
 Replace `YOUR_PUBLIC_KEY` with your Freighter G-address. Each call provides 10,000 test XLM.
 
-5. Click **Connect Wallet** on Stellar-Star and approve in Freighter
+5. Click **Connect Wallet** on X-Stellar and approve in Freighter
 
 ## 8. Running Tests
 

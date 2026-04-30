@@ -1,4 +1,4 @@
-# Stellar-Star — Requirement Proof Matrix
+# X-Stellar — Requirement Proof Matrix
 
 Maps each feature requirement to its implementation files.
 

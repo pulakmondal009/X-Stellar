@@ -1,8 +1,8 @@
 <p align="center">
-  <a href="https://stellar-star-five.vercel.app/">
+  <a href="https://x-stellar.vercel.app/">
     <picture>
-     <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/%E2%AD%90_Stellar--star-Split_Bills._Pay_On--Chain.-0F0F14?style=for-the-badge&labelColor=white&color=2DD4BF" />
-      <img alt="Stellar-star" src="https://img.shields.io/badge/%E2%AD%90_Stellar--star-Split_Bills._Pay_On--Chain.-0F0F14?style=for-the-badge&labelColor=white&color=2DD4BF" />
+     <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/%E2%AD%90_X-Stellar-Split_Bills._Pay_On--Chain.-0F0F14?style=for-the-badge&labelColor=white&color=2DD4BF" />
+      <img alt="X-Stellar" src="https://img.shields.io/badge/%E2%AD%90_X-Stellar-Split_Bills._Pay_On--Chain.-0F0F14?style=for-the-badge&labelColor=white&color=2DD4BF" />
     </picture>
   </a>
 </p>
@@ -10,11 +10,11 @@
 <div align="center">
   <div style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: white; border-radius: 16px; padding: 24px 40px;">
     <span style="font-size: 1.5rem; line-height: 1;">⭐</span>
-    <h2 style="margin: 0;"><span style="color: #0F0F14;">Stellar</span><span style="color: #2DD4BF;">-Star</span></h2>
+    <h2 style="margin: 0;"><span style="color: #0F0F14;">X</span><span style="color: #2DD4BF;">-Stellar</span></h2>
   </div>
 </div>
 
-<h1 align="center">⚡ Stellar-star — Split Bills. Pay On-Chain.</h1>
+<h1 align="center">⚡ X-Stellar — Split Bills. Pay On-Chain.</h1>
 
 <p align="center">
   <em>Decentralized expense splitting on Stellar Testnet.</em><br/>
@@ -57,9 +57,9 @@
 
 ## Project Description
 
-> **Stellar-star** solves the common *"IOU but no payment"* problem in group expense apps.
+> **X-Stellar** solves the common *"IOU but no payment"* problem in group expense apps.
 
-Most split apps only track debts. **Stellar-star closes the loop** by letting members settle instantly with XLM and verify results on-chain.
+Most split apps only track debts. **X-Stellar closes the loop** by letting members settle instantly with XLM and verify results on-chain.
 
 Every payment can be traced through an explorer transaction hash, and settlement metadata is stored via Soroban contract calls for **transparency** and **dispute resistance**.
 
@@ -112,11 +112,11 @@ Every payment can be traced through an explorer transaction hash, and settlement
 
 ### Landing Page on Phone
 
-![Stellar-star Landing on Phone](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20201122.png)
+![X-Stellar Landing on Phone](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20201122.png)
 
 ### Dashboard on Phone
 
-![Stellar-star Dashboard on Phone](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20201122.png)
+![X-Stellar Dashboard on Phone](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20201122.png)
 
 </details>
 
@@ -124,7 +124,7 @@ Every payment can be traced through an explorer transaction hash, and settlement
 <summary><strong>🏠 Landing Page</strong></summary>
 <br/>
 
-![Stellar-star Landing](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083517.png)
+![X-Stellar Landing](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083517.png)
 
 </details>
 
@@ -132,7 +132,7 @@ Every payment can be traced through an explorer transaction hash, and settlement
 <summary><strong>📊 Dashboard</strong></summary>
 <br/>
 
-![Stellar-star Dashboard](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083904.png)
+![X-Stellar Dashboard](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083904.png)
 
 </details>
 
@@ -140,7 +140,7 @@ Every payment can be traced through an explorer transaction hash, and settlement
 <summary><strong>💰 Expenses Page</strong></summary>
 <br/>
 
-![Stellar-star Expenses](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083925.png)
+![X-Stellar Expenses](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083925.png)
 
 </details>
 
@@ -148,7 +148,7 @@ Every payment can be traced through an explorer transaction hash, and settlement
 <summary><strong>🧳 Trips Page</strong></summary>
 <br/>
 
-![Stellar-star Trips](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083946.png)
+![X-Stellar Trips](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20083946.png)
 
 </details>
 
@@ -156,7 +156,7 @@ Every payment can be traced through an explorer transaction hash, and settlement
 <summary><strong>📝 New Expense Form</strong></summary>
 <br/>
 
-![Stellar-star New Expense Form](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20084052.png)
+![X-Stellar New Expense Form](https://ik.imagekit.io/ahfz0yimd/Screenshot%202026-04-28%20084052.png)
 
 </details>
 
@@ -164,7 +164,7 @@ Every payment can be traced through an explorer transaction hash, and settlement
 <summary><strong>🧪 Test Output</strong></summary>
 <br/>
 
-![Stellar-star Test Output](public/testcase.png)
+![X-Stellar Test Output](public/testcase.png)
 
 </details>
 
@@ -312,7 +312,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 
 # ── App Metadata ─────────────────────────────────
-NEXT_PUBLIC_APP_NAME=Stellar-star
+NEXT_PUBLIC_APP_NAME=X-Stellar
 NEXT_PUBLIC_APP_VERSION=1.0.0
 NEXT_PUBLIC_SITE_URL=https://x-stellar.vercel.app
 ```
@@ -393,7 +393,7 @@ bash scripts/deploy-contract.sh settlex-deployer
 ## Project Structure
 
 ```
-stellar-star/
+X-Stellar/
 │
 ├── 📂 app/                → Next.js app routes
 ├── 📂 components/         → UI and feature components
@@ -422,4 +422,4 @@ stellar-star/
 
 ## License
 
-**MIT** (2026) Stellar-star
+**MIT** (2026) X-Stellar
