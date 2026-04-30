@@ -21,6 +21,11 @@ type UserRow = {
   last_login_at: string;
 };
 
+type SupabaseRowResult<T> = {
+  data: T | null;
+  error: { message?: string } | null;
+};
+
 export interface User {
   id: string;
   walletAddress: string;
@@ -81,7 +86,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // ─── Watch wallet connection ───
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || !isConnected) {
+      if (isHydrated && !publicKey) {
+        setUser(null);
+        setIsLoading(false);
+      }
+      return;
+    }
 
     async function loadUser() {
       if (!publicKey) {
@@ -94,11 +105,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       try {
         if (isSupabaseConfigured() && db) {
-          const { data, error } = await db
+          const result = (await db
             .from("users")
             .select("*")
             .eq("wallet_address", publicKey)
-            .single() as { data: UserRow | null; error: any };
+            .single()) as SupabaseRowResult<UserRow>;
+          const { data, error } = result;
 
           if (data && !error) {
             const u: User = {
@@ -128,7 +140,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(demoUser);
           cacheUser(demoUser);
         }
-      } catch (err) {
+      } catch (err: unknown) {
         console.error("Failed to load user:", err);
         setUser(null);
       } finally {
@@ -137,7 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     loadUser();
-  }, [publicKey, isHydrated]);
+  }, [publicKey, isHydrated, isConnected]);
 
   // ─── Sign Up ───
   const signUp = useCallback(
@@ -145,7 +157,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!publicKey) return null;
 
       if (isSupabaseConfigured() && db) {
-        const { data, error } = await db
+        const result = (await db
           .from("users")
           .insert({
             id: crypto.randomUUID(),
@@ -154,9 +166,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             last_login_at: new Date().toISOString(),
           })
           .select()
-          .single() as { data: UserRow | null; error: any };
+          .single()) as SupabaseRowResult<UserRow>;
+        const { data, error } = result;
 
-        if (error) throw new Error(error.message);
+        if (error) throw new Error(error.message ?? "Failed to sign up");
         if (!data) return null;
 
         const u: User = {
@@ -193,11 +206,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!publicKey) return null;
 
     if (isSupabaseConfigured() && db) {
-      const { data, error } = await db
+      const result = (await db
         .from("users")
         .select("*")
         .eq("wallet_address", publicKey)
-        .single() as { data: UserRow | null; error: any };
+        .single()) as SupabaseRowResult<UserRow>;
+      const { data, error } = result;
 
       if (error || !data) return null;
 
@@ -235,17 +249,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!user || !publicKey) return;
 
       if (isSupabaseConfigured() && db) {
-        const dbUpdates: Record<string, any> = {};
+        const dbUpdates: Record<string, unknown> = {};
         if (updates.displayName) dbUpdates.display_name = updates.displayName;
 
         await db.from("users").update(dbUpdates).eq("id", user.id);
 
         // Re-fetch
-        const { data } = await db
+        const { data } = (await db
           .from("users")
           .select("*")
           .eq("id", user.id)
-          .single() as { data: UserRow | null };
+          .single()) as { data: UserRow | null };
 
         if (data) {
           const u: User = {

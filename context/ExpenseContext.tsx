@@ -86,7 +86,7 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
     setExpenses((prev) => prev.map((e) => e.id === id ? { ...e, ...updates, updatedAt: new Date().toISOString() } : e));
     try {
       if (isSupabaseConfigured() && db) {
-        const dbUpdates: Record<string, any> = { updated_at: new Date().toISOString() };
+        const dbUpdates: Record<string, unknown> = { updated_at: new Date().toISOString() };
         if (updates.title !== undefined) dbUpdates.title = updates.title;
         if (updates.description !== undefined) dbUpdates.description = updates.description;
         if (updates.totalAmount !== undefined) dbUpdates.total_amount = updates.totalAmount;

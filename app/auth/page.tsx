@@ -46,8 +46,8 @@ export default function AuthPage() {
         toast.success("Welcome back!", "Signed in successfully.");
       }
       router.push("/dashboard");
-    } catch (err: any) {
-      const msg = err?.message ?? "Something went wrong.";
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Something went wrong.";
       // Duplicate wallet — auto switch to sign-in
       if (msg.includes("already registered") || msg.includes("23505") || msg.includes("duplicate")) {
         setIsSignUpMode(false);

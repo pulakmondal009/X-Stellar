@@ -91,8 +91,8 @@ export function usePayment(): UsePaymentReturn {
         }
 
         return result.hash;
-      } catch (err: any) {
-        const message = err?.message ?? "Payment failed";
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Payment failed";
         setError(message);
         setStatus("error");
         throw err;

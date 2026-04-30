@@ -82,7 +82,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
     setTrips((prev) => prev.map((t) => t.id === id ? { ...t, ...updates } : t));
     try {
       if (isSupabaseConfigured() && db) {
-        const dbUpdates: Record<string, any> = {};
+        const dbUpdates: Record<string, unknown> = {};
         if (updates.name !== undefined) dbUpdates.name = updates.name;
         if (updates.description !== undefined) dbUpdates.description = updates.description;
         if (updates.members !== undefined) dbUpdates.members = JSON.parse(JSON.stringify(updates.members));

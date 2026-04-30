@@ -102,9 +102,10 @@ function NetPaymentRow({
       setRowState("done");
       onPaid(result.hash);
       toast.success("Settlement paid!", `${formatXLM(payment.amount)} XLM sent to ${payment.to}`);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Transaction could not be completed.";
       console.error("Settlement payment failed:", err);
-      toast.error("Payment failed", err?.message || "Transaction could not be completed.");
+      toast.error("Payment failed", message);
       setRowState("idle");
     }
   }, [payment, toast, onPaid]);

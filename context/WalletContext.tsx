@@ -24,6 +24,10 @@ function syncPublicKeyCookie(publicKey: string | null) {
   }
 }
 
+function getErrorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error ? error.message : fallback;
+}
+
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
@@ -130,8 +134,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       await Promise.all([fetchBalance(pk), hydrateNetwork()]);
 
       console.info("Wallet connected successfully");
-    } catch (err: any) {
-      const message = err?.message ?? "Failed to connect wallet";
+    } catch (err: unknown) {
+      const message = getErrorMessage(err, "Failed to connect wallet");
       setError(message);
       console.error("Wallet connection error:", message);
     } finally {

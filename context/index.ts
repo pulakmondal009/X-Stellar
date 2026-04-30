@@ -1,5 +1,3 @@
-"use client";
-
 export * from "./WalletContext";
 export * from "./AuthContext";
 export * from "./ExpenseContext";

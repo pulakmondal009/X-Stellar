@@ -21,6 +21,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useTrip } from "@/context/TripContext";
 import { useExpense } from "@/context/ExpenseContext";
 import { useToast } from "@/components/ui/Toast";
+import type { Member } from "@/types/expense";
 import type { Trip } from "@/types/trip";
 
 /* ═══════════════════════════════════════════════════
@@ -84,7 +85,7 @@ function TripsView() {
   }, [trips, expenses]);
 
   const handleFormSubmit = useCallback(
-    async (data: { name: string; description?: string; members: any[] }) => {
+    async (data: { name: string; description?: string; members: Member[] }) => {
       const trip: Trip = {
         id: crypto.randomUUID(),
         name: data.name,
