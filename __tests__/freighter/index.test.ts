@@ -1,18 +1,20 @@
 import {
   isFreighterInstalled,
   getFreighterPublicKey,
+  requestFreighterAccess,
   signXDR,
 } from "@/lib/freighter";
 
 const mockIsConnected = jest.fn();
 const mockGetAddress = jest.fn();
+const mockRequestAccess = jest.fn();
 const mockSignTransaction = jest.fn();
 
 jest.mock("@stellar/freighter-api", () => ({
-  isConnected: (...args: any[]) => mockIsConnected(...args),
-  getAddress: (...args: any[]) => mockGetAddress(...args),
-  signTransaction: (...args: any[]) => mockSignTransaction(...args),
-  requestAccess: jest.fn(),
+  isConnected: (...args: unknown[]) => mockIsConnected(...args),
+  getAddress: (...args: unknown[]) => mockGetAddress(...args),
+  signTransaction: (...args: unknown[]) => mockSignTransaction(...args),
+  requestAccess: (...args: unknown[]) => mockRequestAccess(...args),
 }));
 
 describe("isFreighterInstalled", () => {
@@ -46,6 +48,21 @@ describe("getFreighterPublicKey", () => {
   it("throws on error response", async () => {
     mockGetAddress.mockResolvedValue({ error: "Rejected" });
     await expect(getFreighterPublicKey()).rejects.toThrow("Rejected");
+  });
+});
+
+describe("requestFreighterAccess", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it("returns address from requestAccess response", async () => {
+    const addr = "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    mockRequestAccess.mockResolvedValue({ address: addr });
+    expect(await requestFreighterAccess()).toBe(addr);
+  });
+
+  it("throws on error response", async () => {
+    mockRequestAccess.mockResolvedValue({ error: "Rejected" });
+    await expect(requestFreighterAccess()).rejects.toThrow("Rejected");
   });
 });
 
